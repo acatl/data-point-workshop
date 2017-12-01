@@ -2,28 +2,28 @@
 
 const Reducers = require('./reducers')
 
-test('it gets all the planets', () => {
+test.skip('it gets all the planets', () => {
   return Reducers.getPlanets().then(acc => {
     expect(acc.value).toEqual([
       {
-        'id': 2,
-        'name': 'Alderaan'
+        id: 2,
+        name: 'Alderaan'
       },
       {
-        'id': 3,
-        'name': 'Yavin IV'
+        id: 3,
+        name: 'Yavin IV'
       },
       {
-        'id': 4,
-        'name': 'Hoth'
+        id: 4,
+        name: 'Hoth'
       },
       {
-        'id': 5,
-        'name': 'Dagobah'
+        id: 5,
+        name: 'Dagobah'
       },
       {
-        'id': 6,
-        'name': 'Bespin'
+        id: 6,
+        name: 'Bespin'
       }
     ])
   })
@@ -32,8 +32,8 @@ test('it gets all the planets', () => {
 test.skip('it gets first planet', () => {
   return Reducers.getFirstPlanet().then(acc => {
     expect(acc.value).toEqual({
-      'id': 2,
-      'name': 'Alderaan'
+      id: 2,
+      name: 'Alderaan'
     })
   })
 })
