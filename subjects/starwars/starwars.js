@@ -8,12 +8,7 @@ const dataPoint = require('data-point').create({
       Request Entity:
       https://github.com/ViacomInc/packages/data-point/#request-entity
     */
-    'request:getPeople': {
-      url: 'https://swapi.co/api/people/',
-      options: {
-        timeout: 8000
-      }
-    },
+    'request:getPeople': {},
 
     /*
       Get first person (result) from request:getPeople
@@ -31,9 +26,7 @@ const dataPoint = require('data-point').create({
       Chained reducers:
       https://github.com/ViacomInc/packages/data-point/#chained-reducers
     */
-    'entry:getLuke': {
-      value: 'request:getPeople | $results[0]'
-    },
+    'entry:getLuke': {},
 
     /*
       Get a Person's basic information
@@ -58,9 +51,7 @@ const dataPoint = require('data-point').create({
       Hash Entity:
       https://github.com/ViacomInc/packages/data-point/#hash-entity
     */
-    'entry:getPersonBasic': {
-      value: ['entry:getLuke', 'hash:PersonBasic']
-    },
+    'entry:getPersonBasic': {},
 
     /*
       Get a person's basic information
@@ -69,14 +60,7 @@ const dataPoint = require('data-point').create({
       Hash.mapKeys:
       https://github.com/ViacomInc/packages/data-point/#hash-mapKeys
     */
-    'hash:PersonBasic': {
-      mapKeys: {
-        name: '$name',
-        birthYear: '$birth_year',
-        species: '$species',
-        starships: '$starships'
-      }
-    },
+    'hash:PersonBasic': {},
 
     /*
       Get Luke's species details
@@ -91,9 +75,7 @@ const dataPoint = require('data-point').create({
         "name": "Human"
       }
     */
-    'entry:getLukeSpecies': {
-      value: ['entry:getLuke', '$species[0]', 'request:getSpecies', 'hash:Species']
-    },
+    'entry:getLukeSpecies': {},
 
     /*
       Fetch a url using the value passed.
@@ -104,12 +86,7 @@ const dataPoint = require('data-point').create({
       String Templates:
       https://github.com/ViacomInc/packages/data-point/#string-template
     */
-    'request:getSpecies': {
-      url: '{value}',
-      options: {
-        timeout: 8000
-      }
-    },
+    'request:getSpecies': {},
 
     /*
       Pick the keys name, language, classification from the value recevied
@@ -119,9 +96,7 @@ const dataPoint = require('data-point').create({
       Hash.pickKeys:
       https://github.com/ViacomInc/packages/data-point/#hash-pickKeys
     */
-    'hash:Species': {
-      pickKeys: ['name', 'language', 'classification']
-    },
+    'hash:Species': {},
 
     /*
       Get List of Luke's starships full details
@@ -131,21 +106,14 @@ const dataPoint = require('data-point').create({
 
       The result is an array of each of his starships with full details.
     */
-    'entry:getLukeStarships': {
-      value: ['entry:getLuke', '$starships', 'request:getStarShip[]']
-    },
+    'entry:getLukeStarships': {},
 
     /*
       Make request to a starship's details API
 
       Same as request:getSpecies use StringTemplate to inject the url
     */
-    'request:getStarShip': {
-      url: '{value}',
-      options: {
-        timeout: 8000
-      }
-    },
+    'request:getStarShip': {},
 
     /*
       Get List of names of Luke's starships
@@ -162,9 +130,7 @@ const dataPoint = require('data-point').create({
       Collection Entity:
       https://github.com/ViacomInc/packages/data-point/#collection-entity
     */
-    'entry:getLukeStarshipsNames': {
-      value: ['entry:getLuke', '$starships', 'collection:getSpaceShips']
-    },
+    'entry:getLukeStarshipsNames': {},
 
     /*
       Resolve to list of names of starships
@@ -175,9 +141,7 @@ const dataPoint = require('data-point').create({
       Collection.map:
       https://github.com/ViacomInc/packages/data-point/#collection-map
     */
-    'collection:getSpaceShips': {
-      map: ['request:getStarShip', '$name']
-    },
+    'collection:getSpaceShips': {},
 
     /*
       Get everyones's details from Star Wars Universe.
@@ -200,7 +164,7 @@ const dataPoint = require('data-point').create({
         ],
       }
     */
-    'entry:AllPeople': ['request:getPeople', '$results', 'hash:PersonDetails[]'],
+    'entry:AllPeople': {},
 
     /*
       Map a Person's details
@@ -225,14 +189,7 @@ const dataPoint = require('data-point').create({
         ],
       }
     */
-    'hash:PersonDetails': {
-      mapKeys: {
-        name: '$name',
-        birthYear: '$birth_year',
-        species: ['$species[0]', 'request:getSpecies', 'hash:Species'],
-        starships: ['$starships', 'collection:getSpaceShips']
-      }
-    }
+    'hash:PersonDetails': {}
   }
 })
 
@@ -243,7 +200,7 @@ const dataPoint = require('data-point').create({
  * @return {Accumulator}
  */
 function log (acc) {
-  console.dir(acc.value, {depth: null})
+  console.dir(acc.value, { depth: null })
   return acc
 }
 
@@ -267,6 +224,6 @@ module.exports = {
     return dataPoint.transform('entry:getLukeStarshipsNames')
   },
   getAllPeople: () => {
-    return dataPoint.transform('entry:AllPeople')
+    return dataPoint.transform('entry:AllPeople').then(log)
   }
 }

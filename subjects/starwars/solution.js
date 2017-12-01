@@ -37,7 +37,12 @@ const dataPoint = require('data-point').create({
       Get Luke's species details
     */
     'entry:getLukeSpecies': {
-      value: ['entry:getLuke', '$species[0]', 'request:getSpecies', 'hash:Species']
+      value: [
+        'entry:getLuke',
+        '$species[0]',
+        'request:getSpecies',
+        'hash:Species'
+      ]
     },
 
     /*
@@ -85,7 +90,9 @@ const dataPoint = require('data-point').create({
     /*
       Get everyones's details from Star Wars Universe.
     */
-    'entry:AllPeople': ['request:getPeople', '$results', 'hash:PersonDetails[]'],
+    'entry:AllPeople': {
+      value: ['request:getPeople', '$results', 'hash:PersonDetails[]']
+    },
 
     /*
       Map a Person's details.
@@ -108,13 +115,13 @@ const dataPoint = require('data-point').create({
  * @return {Accumulator}
  */
 function log (acc) {
-  console.dir(acc.value, {depth: null})
+  console.dir(acc.value, { depth: null })
   return acc
 }
 
 module.exports = {
   getPeople: () => {
-    return dataPoint.transform('request:getPeople')
+    return dataPoint.transform('request:getPeople').then(log)
   },
   getLuke: () => {
     return dataPoint.transform('entry:getLuke')
