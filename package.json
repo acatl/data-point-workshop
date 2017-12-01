@@ -1,0 +1,52 @@
+{
+  "name": "data-point-workshop",
+  "license": "MIT",
+  "description": "DataPoint YHack workshop",
+  "scripts": {
+    "test:hello-world": "jest subjects/hello-world --watchAll",
+    "test:starwars": "jest subjects/starwars --watchAll",
+    "test:reducers": "jest subjects/reducers --watchAll",
+    "test:entities": "jest subjects/entities --watchAll",
+    "precommit": "lint-staged",
+    "commit": "git-cz",
+    "test": "jest",
+    "postinstall": "jest --coverage",
+    "lint": "standard --verbose | snazzy",
+    "publish": "jest & standard-version && git push --follow-tags origin master && npm publish",
+    "watch": "jest --watchAll"
+  },
+  "author": {
+    "name": "Acatl Pacheco",
+    "email": "acatl.pacheco@gmail.com"
+  },
+  "private": true,
+  "dependencies": {
+    "data-point": "^1.3.0",
+    "got": "^8.0.0",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "commitizen": "latest",
+    "cz-conventional-changelog": "latest",
+    "jest": "latest",
+    "lint-staged": "latest",
+    "prettier-standard": "^7.0.3",
+    "snazzy": "latest",
+    "standard": "latest",
+    "standard-version": "latest",
+    "supertest": "^3.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier-standard",
+      "git add",
+      "standard",
+      "jest --bail --findRelatedTests"
+    ]
+  }
+}
