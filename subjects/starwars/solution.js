@@ -114,14 +114,14 @@ const dataPoint = require('data-point').create({
  * @param {Accumulator} acc - accumulator object
  * @return {Accumulator}
  */
-function log (acc) {
-  console.dir(acc.value, { depth: null })
-  return acc
-}
+// function log (acc) {
+//   console.dir(acc.value, { depth: null })
+//   return acc
+// }
 
 module.exports = {
   getPeople: () => {
-    return dataPoint.transform('request:getPeople').then(log)
+    return dataPoint.transform('request:getPeople')
   },
   getLuke: () => {
     return dataPoint.transform('entry:getLuke')

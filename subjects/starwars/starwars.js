@@ -206,7 +206,7 @@ function log (acc) {
 
 module.exports = {
   getPeople: () => {
-    return dataPoint.transform('request:getPeople')
+    return dataPoint.transform('request:getPeople').then(log)
   },
   getLuke: () => {
     return dataPoint.transform('entry:getLuke')
@@ -224,6 +224,6 @@ module.exports = {
     return dataPoint.transform('entry:getLukeStarshipsNames')
   },
   getAllPeople: () => {
-    return dataPoint.transform('entry:AllPeople').then(log)
+    return dataPoint.transform('entry:AllPeople')
   }
 }
